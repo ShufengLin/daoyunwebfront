@@ -30,11 +30,15 @@
                     :data="tableData"
                     border
                     class="table"
+                    row-key="id"
+                    lazy
+                :load="load"
+                :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
                     ref="multipleTable"
                     header-cell-class-name="table-header"
                     @selection-change="handleSelectionChange"
             >
-                <el-table-column prop="id" label="内容编号" width="55" align="center"></el-table-column>
+                <el-table-column prop="id" label="内容编号" width="150" align="center"></el-table-column>
                 <el-table-column prop="itemKey" label="ItemKey"></el-table-column>
                 <el-table-column prop="itemValue" label="ItemValue"></el-table-column>
                 <el-table-column prop="isDefault" label="是否默认"></el-table-column>
@@ -42,15 +46,15 @@
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
                         <el-button
-                                type="text"
-                                icon="el-icon-edit"
-                                @click="handleEdit(scope.$index, scope.row)"
+                            type="text"
+                            icon="el-icon-edit"
+                            @click="handleEdit(scope.$index, scope.row)"
                         >编辑</el-button>
                         <el-button
-                                type="text"
-                                icon="el-icon-delete"
-                                class="red"
-                                @click="handleDelete(scope.$index, scope.row)"
+                            type="text"
+                            icon="el-icon-delete"
+                            class="red"
+                            @click="handleDelete(scope.$index, scope.row)"
                         >删除</el-button>
                     </template>
                 </el-table-column>
@@ -96,7 +100,7 @@
         </el-dialog>
 
         <!-- 新增弹出框 -->
-        <el-dialog title="新增" :visible.sync="addVisible" width="30%">
+        <el-dialog title="新增" :visible.sync="addVisible" width="30%" v-if="addVisible">
             <el-form ref="addform" :model="addform" label-width="100px">
                 <el-form-item label="ItemKey">
                     <el-input v-model.number="addform.itemKey"></el-input>
@@ -109,6 +113,9 @@
                 </el-form-item>
                 <el-form-item label="Code">
                     <el-input v-model="addform.code"></el-input>
+                </el-form-item>
+                <el-form-item label="分类">
+                    <el-cascader :props="props" v-model="rootData" clearable></el-cascader>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -125,17 +132,66 @@
     export default {
         name: "basetable",
         data() {
+            let that = this;//修改this指向，因为此时this指向的是控件本身，而不是vue实例，则无法调用内部函数
             return {
+                props: {
+                    lazy: true,
+                    checkStrictly: true,
+                    lazyLoad (node, resolve) {//级联选择器懒加载
+                        const { level } = node;
+                        if (node.level == 0) {//根节点数据处理
+                            that.getAllDicDetailRoot()
+                            setTimeout(() => {
+                                const nodes = that.rootData
+                                    .map(item => ({
+                                        value: item.id,
+                                        label: item.itemValue,
+                                    }));
+                                // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+                                resolve(nodes);
+                            },500);
+                        }
+                        else{//后续子节点数据处理
+                            that.getChildrenDicDetail(node.value)
+                            setTimeout(() => {
+                                const nodes = that.childrenData
+                                    .map(item => ({
+                                        value: item.id,
+                                        label: item.itemValue,
+                                        leaf: level >= 5,
+                                        length: level + 1
+                                    }));
+                                // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+                                resolve(nodes);
+                            },500);
+                        }
+                    }
+                },
                 query: {
                     page: 1,
                     pageSize: 10
                 },
-                tableData: [],
+                tableData: [
+                    {
+                    hasChildren:false
+                    }
+                ],
                 selectTotal: 0,
                 multipleSelection: [],
                 delList: [],
                 editVisible: false,
                 addVisible: false,
+                rootData: [
+                ],
+                childrenData: [
+                    {
+                        id:0,
+                        itemKey:0,
+                        itemValue:"",
+                        isDefault:0,
+                        code:""
+                    }
+                ],
                 form: {
                     id: 0,
                     dicId: 0,
@@ -171,6 +227,14 @@
             });
         },
         methods: {
+            load(tree, treeNode, resolve) {//表格数据懒加载
+                this.getChildrenDicDetail(tree.id);
+                setTimeout(() => {//设置延时1秒，防止数据库响应还没有完成页面就从childrenData中获取数据
+                    resolve(
+                        this.childrenData
+                    )
+                }, 1000)
+            },
             // 获取 easy-mock 的模拟数据
             getData() {
                 axios
@@ -187,7 +251,15 @@
                         res => {
                             console.log(res);
                             if (res.status == 200) {
-                                this.tableData = res.data.data;
+                                if (res.data.code == 0) {
+                                    this.tableData = res.data.data;
+                                    this.$message.success(res.data.msg);
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
                             }
                         },
                         error => {
@@ -243,8 +315,15 @@
                         res => {
                             console.log(res);
                             if (res.status == 200) {
-                                this.getData();
-                                this.getDataCount();
+                                if (res.data.code == 0) {
+                                    this.getData();
+                                    this.getDataCount();
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
                             }
                         },
                         error => {
@@ -269,8 +348,15 @@
                         res => {
                             console.log(res);
                             if (res.status == 200) {
-                                this.getData();
-                                this.getDataCount();
+                                if (res.data.code == 0) {
+                                    this.getData();
+                                    this.getDataCount();
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
                             }
                         },
                         error => {
@@ -288,8 +374,15 @@
                         res => {
                             console.log(res);
                             if (res.status == 200) {
-                                this.getData();
-                                this.getDataCount();
+                                if (res.data.code == 0) {
+                                    this.getData();
+                                    this.getDataCount();
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
                             }
                         },
                         error => {
@@ -297,6 +390,57 @@
                         }
                     );
             },
+            getChildrenDicDetail(id) {
+                axios
+                    .post(
+                        "http://localhost:8080/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
+                    )
+                    .then(
+                        res => {
+                            console.log(res);
+                            if (res.status == 200) {
+                                if (res.data.code == 0) {
+                                    this.childrenData = res.data.data;
+                                    this.$message.success(res.data.msg);
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    );
+            },
+        getAllDicDetailRoot(dicId) {
+            dicId = this.dicId;
+            axios
+                .post(
+                    "http://localhost:8080/daoyunWeb/DictionaryDetail/getAllDicDetailRoot/"+dicId,
+                )
+                .then(
+                    res => {
+                        console.log(res);
+                        if (res.status == 200) {
+                            if (res.data.code == 0) {
+                                this.rootData = res.data.data;
+                                this.$message.success(res.data.msg);
+                            } else if (res.data.code == -2) {
+                                this.$router.push('/login');
+                                this.$message.error(res.data.msg);
+                            } else {
+                                this.$message.error(res.data.msg);
+                            }
+                        }
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                );
+        },
             // 触发搜索按钮
             handleSearch() {
                 this.$set(this.query, "pageIndex", 1);

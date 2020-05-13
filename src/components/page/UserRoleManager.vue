@@ -87,23 +87,13 @@
         <!-- 新增弹出框 -->
         <el-dialog title="新增" :visible.sync="addVisible" width="30%">
             <el-form ref="addForm" :model="addForm" label-width="70px">
-                <el-form-item label="教师姓名">
+                <el-form-item label="账号名">
                     <el-input v-model="addForm.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="电话号码">
-                    <el-input v-model.number="addForm.phoneNumber"></el-input>
-                </el-form-item>
-                <el-form-item label="密码">
-                    <el-input v-model="addForm.password"></el-input>
-                </el-form-item>
-                <el-form-item label="学校">
-                    <el-input v-model="addForm.school"></el-input>
-                </el-form-item>
-                <el-form-item label="学院">
-                    <el-input v-model="addForm.academy"></el-input>
-                </el-form-item>
-                <el-form-item label="专业">
-                    <el-input v-model="addForm.major"></el-input>
+                <el-form-item label="角色">
+                    <el-radio-group v-model="addForm.roleName"  v-for="item in roleList":key="item.roleId">
+                        <el-radio-button :label="item.roleName"></el-radio-button>
+                    </el-radio-group>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -276,19 +266,14 @@
                         }
                     );
             },
-            // 增加课程
-            addTeacher(){
+            // 增加用户
+            addUserRole(){
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/teacher/addTeacherJson",
+                        "http://localhost:8080/daoyunWeb/userRole/addUserRoleJson",
                         {
-                            userId: this.addForm.userId,
                             userName: this.addForm.userName,
-                            phoneNumber: this.addForm.phoneNumber,
-                            password: this.addForm.password,
-                            school: this.addForm.school,
-                            academy: this.addForm.academy,
-                            major: this.addForm.major
+                            roleName: this.addForm.roleName
                         },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -299,6 +284,7 @@
                                 if (res.data.code == 0) {
                                     this.getData();
                                     this.getDataCount();
+                                    this.getAllRoleData();
                                 } else if (res.data.code == -2) {
                                     this.$router.push('/login');
                                     this.$message.error(res.data.msg);
@@ -357,7 +343,7 @@
             },
             // 保存新增
             saveAdd() {
-                this.addTeacher();
+                this.addUserRole();
                 this.addVisible = false;
             },
             // 保存编辑

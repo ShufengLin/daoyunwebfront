@@ -115,7 +115,7 @@
           <el-input v-model="addform.code"></el-input>
         </el-form-item>
         <el-form-item label="分类">
-          <el-cascader :props="props" v-model="rootData" clearable></el-cascader>
+          <el-cascader :props="props" v-model="rootData" clearable ref="addCascader"></el-cascader>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -204,7 +204,8 @@ export default {
         itemKey: 0,
         itemValue: "",
         isDefault: 0,
-        code: ""
+        code: "",
+        parentId:0
       },
       paperId: 0,
       paperName: "",
@@ -330,6 +331,11 @@ export default {
         );
     },
     addPaperDetail() {
+      const checkedNodes = this.$refs['addCascader'].getCheckedNodes();
+      let cascaderValue = 0;
+      if(checkedNodes[0] != 'undefined' && checkedNodes[0]!= null){
+        cascaderValue = checkedNodes[0].data.value;
+      }
       axios
         .post(
           "http://localhost:8080/daoyunWeb/testDetailExample/addPaperDetailJson",
@@ -338,7 +344,8 @@ export default {
             itemKey: this.addform.itemKey,
             itemValue: this.addform.itemValue,
             isDefault: this.addform.isDefault,
-            code: this.addform.code
+            code: this.addform.code,
+            parentId: cascaderValue
           },
           { headers: { "Content-Type": "application/json" } }
         )

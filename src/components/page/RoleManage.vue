@@ -72,12 +72,11 @@
                 </el-form-item>
                 <el-form-item label="角色权限" >
                     <el-checkbox-group v-model="ownPermissionList" disabled>
-                        <el-checkbox v-for="permission in ownPermissionList" :label="permission.permissionName" :key="permission.permissionName">{{permission.permissionName}}</el-checkbox>
+                        <el-checkbox v-for="permission in ownPermissionList" :label="permission" :key="permission">{{permission}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="detailVisible = false">取 消</el-button>
               <el-button type="primary" @click="detailVisible = false">确 定</el-button>
           </span>
         </el-dialog>
@@ -92,8 +91,8 @@
                     <el-input v-model="form.roleDescription"></el-input>
                 </el-form-item>
                 <el-form-item label="角色权限">
-                    <el-checkbox-group v-model="allPermissionList">
-                        <el-checkbox v-for="permission in allPermissionList" :label="permission.permissionId" :key="permission.permissionId">{{permission.permissionName}}</el-checkbox>
+                    <el-checkbox-group v-model="ownPermissionList">
+                        <el-checkbox v-for="permission in allPermissionList" :label="permission.permissionName" :key="permission.permissionName">{{permission.permissionName}}</el-checkbox>
                     </el-checkbox-group>
                 </el-form-item>
             </el-form>
@@ -291,7 +290,7 @@
                         }
                     );
             },
-            // 增加课程
+            // 增加角色
             addRole(){
                 axios
                     .post(
@@ -408,6 +407,8 @@
             handleEdit(index, row) {
                 this.idx = index;
                 this.form = row;
+                this.getOwnPermission();
+                this.form.permissionList = this.ownPermissionList;
                 this.editVisible = true;
             },
             // 保存编辑

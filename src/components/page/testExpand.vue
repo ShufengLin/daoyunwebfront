@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 测试树形表格页面
+          <i class="el-icon-tickets"></i> 系统参数页面
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -14,14 +14,14 @@
           icon="el-icon-delete"
           class="handle-del mr10"
           @click="handleAdd"
-        >新增字典</el-button>
+        >新增参数</el-button>
         <el-button
           type="primary"
           icon="el-icon-delete"
           class="handle-del mr10"
           @click="delAllSelection"
         >批量删除</el-button>
-        <el-input v-model="query.paperName" placeholder="字典名称" class="handle-input mr10"></el-input>
+        <el-input v-model="query.paperName" placeholder="参数名称" class="handle-input mr10"></el-input>
         <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
       </div>
       <el-table
@@ -33,10 +33,10 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" align="center"></el-table-column>
-        <el-table-column prop="paperId" label="字典编号" width="55" align="center"></el-table-column>
-        <el-table-column prop="paperName" label="字典名称"></el-table-column>
-        <el-table-column prop="paperNum" label="Code"></el-table-column>
-        <el-table-column prop="paperDetail" label="字典描述"></el-table-column>
+        <el-table-column prop="paperId" label="参数编号" width="55" align="center"></el-table-column>
+        <el-table-column prop="paperName" label="参数名称"></el-table-column>
+        <el-table-column prop="paperNum" label="一次签到的经验值"></el-table-column>
+        <el-table-column prop="paperDetail" label="可签到的距离"></el-table-column>
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
@@ -73,16 +73,16 @@
     <!-- 编辑弹出框 -->
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="70px">
-        <el-form-item label="字典编号">
+        <el-form-item label="参数编号">
           <el-input v-model.number="form.paperId" disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="字典名称">
+        <el-form-item label="参数名称">
           <el-input v-model="form.paperName"></el-input>
         </el-form-item>
-        <el-form-item label="Code">
+        <el-form-item label="一次签到的经验值">
           <el-input v-model.number="form.paperNum"></el-input>
         </el-form-item>
-        <el-form-item label="字典描述">
+        <el-form-item label="可签到的距离">
           <el-input v-model="form.paperDetail"></el-input>
         </el-form-item>
       </el-form>

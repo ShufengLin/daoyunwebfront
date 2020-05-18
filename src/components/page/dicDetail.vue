@@ -31,6 +31,7 @@
                     border
                     class="table"
                     row-key="id"
+                    key="tableKey"
                     lazy
                 :load="load"
                 :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
@@ -115,7 +116,7 @@
                     <el-input v-model="addform.code"></el-input>
                 </el-form-item>
                 <el-form-item label="分类">
-                    <el-cascader :props="props" v-model="rootData" clearable></el-cascader>
+                    <el-cascader :props="props" v-model="rootData" clearable ref="addCascader"></el-cascader>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -128,6 +129,7 @@
 
 <script>
     import { fetchData } from "../../api/index";
+    import uuidv4 from 'uuid/v4'
     import axios from "axios";
     export default {
         name: "basetable",
@@ -204,7 +206,8 @@
                     itemKey: 0,
                     itemValue: "",
                     isDefault: 0,
-                    code: ""
+                    code: "",
+                    parentId:0
                 },
                 dicId: 0,
                 dicName: "",
@@ -212,7 +215,9 @@
                 dicDescription: "",
 
                 idx: -1,
-                id: -1
+                id: -1,
+                tableKey:0,
+                rowTableKey:0
             };
         },
         created() {},
@@ -227,8 +232,8 @@
             });
         },
         methods: {
-            load(tree, treeNode, resolve) {//表格数据懒加载
-                this.getChildrenDicDetail(tree.id);
+            load(row, treeNode, resolve) {//表格数据懒加载
+                this.getChildrenDicDetail(row.id);
                 setTimeout(() => {//设置延时1秒，防止数据库响应还没有完成页面就从childrenData中获取数据
                     resolve(
                         this.childrenData
@@ -332,6 +337,11 @@
                     );
             },
             addDicd() {
+                const checkedNodes = this.$refs['addCascader'].getCheckedNodes();
+                let cascaderValue = 0;
+                if(checkedNodes[0] != 'undefined' && checkedNodes[0]!= null){
+                    cascaderValue = checkedNodes[0].data.value;
+                }
                 axios
                     .post(
                         "http://localhost:8080/daoyunWeb/DictionaryDetail/addDicdJson",
@@ -340,7 +350,8 @@
                             itemKey: this.addform.itemKey,
                             itemValue: this.addform.itemValue,
                             isDefault: this.addform.isDefault,
-                            code: this.addform.code
+                            code: this.addform.code,
+                            parentId: cascaderValue
                         },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -351,6 +362,9 @@
                                 if (res.data.code == 0) {
                                     this.getData();
                                     this.getDataCount();
+                                    if(cascaderValue!=0){
+                                        this.refreshChildrenDicDetail(cascaderValue);
+                                    }
                                 } else if (res.data.code == -2) {
                                     this.$router.push('/login');
                                     this.$message.error(res.data.msg);
@@ -402,6 +416,32 @@
                                 if (res.data.code == 0) {
                                     this.childrenData = res.data.data;
                                     this.$message.success(res.data.msg);
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    );
+            },
+            refreshChildrenDicDetail(id) {//加载指定id节点的树形表格数据，达到重新刷新的目的
+                axios
+                    .post(
+                        "http://localhost:8080/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
+                    )
+                    .then(
+                        res => {
+                            console.log(res);
+                            if (res.status == 200) {
+                                if (res.data.code == 0) {
+                                    this.childrenData = res.data.data;
+                                    this.$message.success(res.data.msg);
+                                    this.$set(this.$refs.multipleTable.store.states.lazyTreeNodeMap, id, res.data.data);
                                 } else if (res.data.code == -2) {
                                     this.$router.push('/login');
                                     this.$message.error(res.data.msg);

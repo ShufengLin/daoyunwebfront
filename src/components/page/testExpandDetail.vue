@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-tickets"></i> 测试树形表格详情页面
+          <i class="el-icon-tickets"></i> 菜单页面
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
@@ -14,7 +14,8 @@
           icon="el-icon-delete"
           class="handle-del mr10"
           @click="handleAdd"
-        >新增字典</el-button>
+        >新增控件</el-button>
+        <!--
         <el-tooltip class="item" effect="dark" placement="top-end">
           <div slot="content">
             id：{{this.paperId}}
@@ -25,6 +26,7 @@
           </div>
           <el-button>名称：{{this.paperName}}</el-button>
         </el-tooltip>
+        -->
       </div>
       <el-table
         :data="tableData"
@@ -39,11 +41,14 @@
         header-cell-class-name="table-header"
         @selection-change="handleSelectionChange"
       >
-        <el-table-column prop="id" label="内容编号" width="150" align="center"></el-table-column>
-        <el-table-column prop="itemKey" label="ItemKey"></el-table-column>
-        <el-table-column prop="itemValue" label="ItemValue"></el-table-column>
+        <el-table-column prop="id" label="菜单编号" width="150" align="center"></el-table-column>
+        <el-table-column prop="itemKey" label="权限等级"></el-table-column>
+        <el-table-column prop="itemValue" label="菜单名称"></el-table-column>
+        <!--
         <el-table-column prop="isDefault" label="是否默认"></el-table-column>
-        <el-table-column prop="code" label="Code"></el-table-column>
+        -->
+        <el-table-column prop="code" label="菜单URL"></el-table-column>
+
         <el-table-column label="操作" width="180" align="center">
           <template slot-scope="scope">
             <el-button
@@ -78,21 +83,26 @@
         <el-form-item label="Id">
           <el-input v-model.number="form.id" disabled="true"></el-input>
         </el-form-item>
+        <!--
         <el-form-item label="内容编号">
           <el-input v-model.number="form.paperId" disabled="true"></el-input>
         </el-form-item>
-        <el-form-item label="ItemKey">
+        -->
+        <el-form-item label="权限等级">
           <el-input v-model.number.number="form.itemKey"></el-input>
         </el-form-item>
-        <el-form-item label="ItemValue">
+        <el-form-item label="菜单名称">
           <el-input v-model="form.itemValue"></el-input>
         </el-form-item>
+        <!--
         <el-form-item label="是否默认(之后要改成selector)">
           <el-input v-model.number="form.isDefault"></el-input>
         </el-form-item>
-        <el-form-item label="Code">
+        -->
+        <el-form-item label="菜单URL">
           <el-input v-model="form.code"></el-input>
         </el-form-item>
+        
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editVisible = false">取 消</el-button>
@@ -103,18 +113,21 @@
     <!-- 新增弹出框 -->
     <el-dialog title="新增" :visible.sync="addVisible" width="30%" v-if="addVisible">
       <el-form ref="addform" :model="addform" label-width="100px">
-        <el-form-item label="ItemKey">
+        <el-form-item label="权限等级">
           <el-input v-model.number="addform.itemKey"></el-input>
         </el-form-item>
-        <el-form-item label="ItemValue">
+        <el-form-item label="控件名称">
           <el-input v-model="addform.itemValue"></el-input>
         </el-form-item>
+        <!--
         <el-form-item label="是否默认(之后要改成selector)">
           <el-input v-model.number="addform.isDefault"></el-input>
         </el-form-item>
-        <el-form-item label="Code">
+        -->
+        <el-form-item label="菜单URL">
           <el-input v-model="addform.code"></el-input>
         </el-form-item>
+        
         <el-form-item label="分类">
           <el-cascader :props="props" v-model="rootData" clearable ref="addCascader"></el-cascader>
         </el-form-item>

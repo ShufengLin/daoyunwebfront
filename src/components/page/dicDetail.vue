@@ -71,7 +71,7 @@
                 ></el-pagination>
             </div>
         </div>
-        
+
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="100px">
@@ -92,6 +92,9 @@
                 </el-form-item>
                 <el-form-item label="Code">
                     <el-input v-model="form.code"></el-input>
+                </el-form-item>
+                <el-form-item label="分类">
+                    <el-cascader :props="props" v-model="rootData" clearable ref="addCascader"></el-cascader>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -200,7 +203,8 @@
                     itemKey: 0,
                     itemValue: "",
                     isDefault: 0,
-                    code: ""
+                    code: "",
+                    parentId:0
                 },
                 addform: {
                     itemKey: 0,
@@ -303,6 +307,11 @@
                     );
             },
             updateDicd() {
+                const checkedNodes = this.$refs['addCascader'].getCheckedNodes();
+                let cascaderValue = 0;
+                if(checkedNodes[0] != 'undefined' && checkedNodes[0]!= null){
+                    cascaderValue = checkedNodes[0].data.value;
+                }
                 axios
                     .post(
                         "http://localhost:8080/daoyunWeb/DictionaryDetail/updateDicdJson",
@@ -312,7 +321,8 @@
                             itemKey: this.form.itemKey,
                             itemValue: this.form.itemValue,
                             isDefault: this.form.isDefault,
-                            code: this.form.code
+                            code: this.form.code,
+                            parentId: cascaderValue
                         },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -323,6 +333,10 @@
                                 if (res.data.code == 0) {
                                     this.getData();
                                     this.getDataCount();
+                                    this.refreshChildrenDicDetail(this.form.parentId)
+                                    if(cascaderValue!=0) {
+                                        this.refreshChildrenDicDetail(cascaderValue);
+                                    }
                                 } else if (res.data.code == -2) {
                                     this.$router.push('/login');
                                     this.$message.error(res.data.msg);
@@ -391,6 +405,7 @@
                                 if (res.data.code == 0) {
                                     this.getData();
                                     this.getDataCount();
+                                    this.refreshChildrenDicDetail(this.form.parentId);
                                 } else if (res.data.code == -2) {
                                     this.$router.push('/login');
                                     this.$message.error(res.data.msg);

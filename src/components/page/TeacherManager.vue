@@ -27,7 +27,7 @@
                     @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="userId" label="教师编号" width="55" align="center" v-if="hideRow"></el-table-column>
+                <el-table-column prop="userId" label="教师编号" width="55" align="center" v-if="false"></el-table-column>
                 <el-table-column prop="userName" label="教师姓名"></el-table-column>
                 <el-table-column prop="phoneNumber" label="电话号码"></el-table-column>
                 <el-table-column prop="password" label="密码"></el-table-column>
@@ -65,7 +65,7 @@
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="教师编号" v-if="hideRow">
+                <el-form-item label="教师编号" v-if="false">
                     <el-input v-model.number="form.userId" disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="教师姓名">

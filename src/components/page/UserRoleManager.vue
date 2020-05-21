@@ -27,10 +27,10 @@
                     @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="id" label="编号" width="55"  v-if="hideRow" align="center"></el-table-column>
-                <el-table-column prop="userId" label="用户编号"  v-if="hideRow"></el-table-column>
+                <el-table-column prop="id" label="编号" width="55"  v-if="false" align="center"></el-table-column>
+                <el-table-column prop="userId" label="用户编号"  v-if="false"></el-table-column>
                 <el-table-column prop="userName" label="账号名"  ></el-table-column>
-                <el-table-column prop="roleId" label="角色编号"  v-if="hideRow"></el-table-column>
+                <el-table-column prop="roleId" label="角色编号"  v-if="false"></el-table-column>
                 <el-table-column prop="roleName" label="角色"  ></el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template slot-scope="scope">
@@ -63,10 +63,10 @@
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="用户编号"  v-if="hideRow">
+                <el-form-item label="用户编号"  v-if="false">
                     <el-input v-model.number="form.id" disabled="true"></el-input>
                 </el-form-item>
-                <el-form-item label="用户账号"  v-if="hideRow" >
+                <el-form-item label="用户账号"  v-if="false" >
                     <el-input v-model.number="form.userId"></el-input>
                 </el-form-item>
                 <el-form-item label="账号名">

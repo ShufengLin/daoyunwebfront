@@ -27,7 +27,7 @@
                     @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="courseId" label="ID" width="55" align="center" v-if="hideRow"></el-table-column>
+                <el-table-column prop="courseId" label="ID" width="55" align="center" v-if="false"></el-table-column>
                 <el-table-column prop="courseName" label="课程名"></el-table-column>
                 <el-table-column prop="userName" label="教师名"></el-table-column>
                 <el-table-column prop="courseHour" label="课程学时"></el-table-column>
@@ -70,7 +70,7 @@
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
             <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="课程编号" v-if="hideRow">
+                <el-form-item label="课程编号" v-if="false">
                     <el-input readonly="true" v-model.number="form.courseId" ></el-input>
                 </el-form-item>
                 <el-form-item label="课程名">

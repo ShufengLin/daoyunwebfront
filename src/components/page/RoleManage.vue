@@ -27,7 +27,7 @@
                     @selection-change="handleSelectionChange"
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="roleId" label="ID" width="55" align="center" v-if="hideRow"></el-table-column>
+                <el-table-column prop="roleId" label="ID" width="55" align="center" v-if="false"></el-table-column>
                 <el-table-column prop="roleName" label="角色名称"></el-table-column>
                 <el-table-column prop="roleDescription" label="角色描述"></el-table-column>
 
@@ -67,7 +67,7 @@
         <!-- 查看弹出框 -->
         <el-dialog title="查看" :visible.sync="detailVisible" width="30%">
             <el-form ref="form" :model="viewForm" label-width="70px">
-                <el-form-item label="角色编号" v-if="hideRow">
+                <el-form-item label="角色编号" v-if="false">
                     <el-input readonly="true" v-model="viewForm.roleId"></el-input>
                 </el-form-item>
                 <el-form-item label="角色权限" >

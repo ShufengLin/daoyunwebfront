@@ -62,6 +62,7 @@
 </template>
 <script>
 import bus from "../common/bus";
+import axios from "axios";
 export default {
   data() {
     var validatePassOld = (rule, value, callback) => {
@@ -96,7 +97,7 @@ export default {
     return {
       collapse: false,
       fullscreen: false,
-      name: "linxin",
+      name: "czl",
       message: 2,
       editVisible: false,
       form: {
@@ -132,12 +133,39 @@ export default {
       this.$refs.form.validate(valid => {
         //在validator中每一个可能性下都要callback()，不然valid值会获取不到，出现问题
         if (valid) {
-          alert("修改密码成功，即将返回登录页，请重新登录！");
-          this.resetForm();
-          this.editVisible = false;
-          localStorage.removeItem("ms_userName");
-          localStorage.removeItem("token");
-          this.$router.push("/login");
+          axios
+            .post(
+              "http://localhost:8080/daoyunWeb/Login/changePassword",
+              {
+                password: this.form.oldPassword,
+                newPassword: this.form.newPassword,
+                userName: localStorage.getItem("ms_userName")
+              },
+              { headers: { "Content-Type": "application/json" } }
+            )
+            .then(
+              res => {
+                console.log(res);
+                if (res.status == 200) {
+                  if (res.data.code == 0) {
+                    alert(res.data.msg+"，即将返回登录页，请重新登录！");
+                    this.resetForm();
+                    this.editVisible = false;
+                    localStorage.removeItem("ms_userName");
+                    localStorage.removeItem("token");
+                    this.$router.push("/login");
+                  } else if (res.data.code == -2) {
+                    this.$router.push("/login");
+                    this.$message.error(res.data.msg);
+                  } else {
+                    this.$message.error(res.data.msg);
+                  }
+                }
+              },
+              error => {
+                console.log(error);
+              }
+            );
         } else {
           this.$message.error("无效的信息输入");
           return false;

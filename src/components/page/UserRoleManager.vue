@@ -73,12 +73,12 @@
                     <el-input v-model="form.userName"></el-input>
                 </el-form-item>
                 <el-form-item label="角色">
-                    <el-radio-group v-model="form.roleName"  v-for="item in roleList":key="item.roleId">
+                    <el-radio-group v-model="form.roleName"  v-for="item in roleList" :key="item.roleId">
                         <el-radio-button :label="item.roleName"></el-radio-button>
                     </el-radio-group>
                 </el-form-item>
             </el-form>
-            <span slot="footer" class="dialog-footer">
+       <span slot="footer" class="dialog-footer">
         <el-button @click="editVisible = false">取 消</el-button>
         <el-button type="primary" @click="saveEdit">确 定</el-button>
       </span>
@@ -91,7 +91,7 @@
                     <el-input v-model="addForm.userName"></el-input>
                 </el-form-item>
                 <el-form-item label="角色">
-                    <el-radio-group v-model="addForm.roleName"  v-for="item in roleList":key="item.roleId">
+                    <el-radio-group v-model="addForm.roleName"  v-for="item in roleList" :key="item.roleId">
                         <el-radio-button :label="item.roleName"></el-radio-button>
                     </el-radio-group>
                 </el-form-item>

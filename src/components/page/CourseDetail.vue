@@ -13,7 +13,7 @@
 
 <!--                &lt;!&ndash; <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection" round>删除所选课程</el-button> &ndash;&gt;-->
 
-                <el-input v-model="query.courseName" placeholder="学生名" class="handle-input mr10"></el-input>
+                <el-input v-model="query.studentName" placeholder="学生名" class="handle-input mr10"></el-input>
 
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
             </div>

@@ -125,13 +125,23 @@ const routes = [{
                 }
             },
             {
-                path: '/test2',
+                path: '/course',
                 component: () =>
                     import ( /*webpackChunkName: "test2" */ '../components/page/Cousemanage.vue'),
                 meta: {
                     title: '课程管理'
                 }
             },
+            {
+                path: '/courseDetail',
+                name: 'courseDetailPage',
+                component: () =>
+                    import ( /*webpackChunkName: "test2" */ '../components/page/CourseDetail.vue'),
+                meta: {
+                    title: '课程详情管理'
+                }
+            },
+
             {
                 path: '/test',
                 component: () =>

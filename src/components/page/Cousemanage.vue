@@ -328,6 +328,18 @@
                 this.addCourse();
                 this.addVisible = false;
             },
+            // 详情操作
+            handleDetail(index, row) {
+                this.idx = index;
+                this.form = row;
+                localStorage.setItem("courseId", this.form.courseId);
+                localStorage.setItem("courseName", this.form.courseName);
+                this.$router.push({
+                    path: '/courseDetail',
+                    name: 'courseDetailPage'
+                    //params: { paperId: this.form.paperId,paperName: this.form.paperName,paperNum: this.form.paperNum,paperDetail: this.form.paperDetail }
+                });
+            },
             // 编辑操作
             handleEdit(index, row) {
                 this.idx = index;

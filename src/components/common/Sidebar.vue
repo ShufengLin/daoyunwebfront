@@ -90,46 +90,46 @@ export default {
                     icon: 'el-icon-tickets',
                     index: 'dictionary',
                     title: '数据字典管理'
-                },
-                {
-                    icon: 'el-icon-tickets',
-                    index: 'test',
-                    title: '测试页面'
-                },
-                {
-                    icon: 'el-icon-tickets',
-                    index: 'testexpand',
-                    title: '测试树形表格页面'
-                },
-                {
-                    icon: 'el-icon-files',
-                    index: '3',
-                    title: '表单相关',
-                    subs: [
-                        {
-                            index: '500',
-                            title: '500异常页面'
-                        },
-                        {
-                            index: 'customerror',
-                            title: '自定义异常页面'
-                        },
-                        {
-                            index: '3-2',
-                            title: '三级菜单',
-                            subs: [
-                                {
-                                    index: '403',
-                                    title: '三级菜单1'
-                                },
-                                {
-                                    index: '404',
-                                    title: '三级菜单2'
-                                }
-                            ]
-                        }
-                    ]
                 }
+                // {
+                //     icon: 'el-icon-tickets',
+                //     index: 'test',
+                //     title: '测试页面'
+                // },
+                // {
+                //     icon: 'el-icon-tickets',
+                //     index: 'testexpand',
+                //     title: '测试树形表格页面'
+                // },
+                // {
+                //     icon: 'el-icon-files',
+                //     index: '3',
+                //     title: '表单相关',
+                //     subs: [
+                //         {
+                //             index: '500',
+                //             title: '500异常页面'
+                //         },
+                //         {
+                //             index: 'customerror',
+                //             title: '自定义异常页面'
+                //         },
+                //         {
+                //             index: '3-2',
+                //             title: '三级菜单',
+                //             subs: [
+                //                 {
+                //                     index: '403',
+                //                     title: '三级菜单1'
+                //                 },
+                //                 {
+                //                     index: '404',
+                //                     title: '三级菜单2'
+                //                 }
+                //             ]
+                //         }
+                //     ]
+                // }
             ]
         };
     },

@@ -58,6 +58,21 @@
                 ></el-pagination>
             </div>
         </div>
+            <!-- 修改参数弹出框 -->
+            <el-dialog title="新增" :visible.sync="editVisible" width="30%">
+                <el-form ref="addForm" :model="editForm" label-width="70px">
+                    <el-form-item label="签到距离">
+                        <el-input v-model="editForm.defaultDistance"></el-input>
+                    </el-form-item>
+                    <el-form-item label="经验值">
+                        <el-input v-model="editForm.defaultExp"></el-input>
+                    </el-form-item>
+                </el-form>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="addVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="saveEdit">确 定</el-button>
+                </span>
+            </el-dialog>
     </div>
 </template>
 
@@ -87,6 +102,10 @@
                 },
                 courseId: 0,
                 courseName: "",
+                editForm: {
+                    defaultDistance: 0,
+                    defaultExp: 0
+                },
                 idx: -1,
                 id: -1
             };
@@ -100,6 +119,7 @@
                 vm.initRouter();
                 vm.getData();
                 vm.getDataCount();
+                vm.getParaData();
             });
         },
         methods: {
@@ -162,6 +182,67 @@
                         }
                     );
             },
+            // 获取 easy-mock 的模拟数据
+            getParaData() {
+                axios
+                    .post(
+                        "http://localhost:8080/daoyunWeb/course/getCourseById",
+                        {
+                            courseId: this.courseId
+                        },
+                        { headers: { "Content-Type": "application/json" } }
+                    )
+                    .then(
+                        res => {
+                            console.log(res);
+                            if (res.status == 200) {
+                                if (res.data.code == 0) {
+                                    this.editForm = res.data.data;
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    );
+            },
+            //更新课程参数，距离和默认经验值
+            updateCourse() {
+                axios
+                    .post(
+                        "http://localhost:8080/daoyunWeb/course/updateCourseParaJson",
+                        {
+                            courseId: this.courseId,
+                            defaultDistance: this.editForm.defaultDistance,
+                            defaultExp: this.editForm.defaultExp,
+                        },
+                        { headers: { "Content-Type": "application/json" } }
+                    )
+                    .then(
+                        res => {
+                            console.log(res);
+                            if (res.status == 200) {
+                                if (res.data.code == 0) {
+                                    this.getData();
+                                    this.getDataCount();
+                                } else if (res.data.code == -2) {
+                                    this.$router.push({ path: "/login" });
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    );
+            },
             // 触发搜索按钮
             handleSearch() {
                 this.$set(this.query, "pageIndex", 1);
@@ -184,10 +265,21 @@
                     })
                     .catch(() => {});
             },
+            // 保存参数
+            saveEdit() {
+                this.editVisible = false;
+                this.$message.success(`修改成功`);
+                this.updateCourse();
+            },
+            handleEdit() {
+                this.getParaData();
+                this.editVisible = true;
+            },
             // 分页导航
             handlePageChange(val) {
                 this.$set(this.query, 'page', val);
                 this.getData();
+                this.getDataCount();
             }
         }
     };

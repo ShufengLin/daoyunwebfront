@@ -31,7 +31,7 @@
                 <el-table-column prop="courseName" label="课程名"></el-table-column>
                 <el-table-column prop="userName" label="教师名"></el-table-column>
                 <el-table-column prop="courseHour" label="课程学时"></el-table-column>
-                <el-table-column prop="startTime" label="开课时间"></el-table-column>
+                <el-table-column prop="startTime":formatter="dateFormat" label="开课时间" > </el-table-column>
                 <el-table-column prop="coursePlace" label="教室"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center">
@@ -83,7 +83,11 @@
                     <el-input v-model.number="form.courseHour"></el-input>
                 </el-form-item>
                 <el-form-item label="开课时间">
-                     <el-input v-model="form.startTime"></el-input>
+                    <el-date-picker
+                            v-model="form.startTime"
+                            type="datetime"
+                            placeholder="选择日期时间">
+                    </el-date-picker>
                  </el-form-item>
                 <el-form-item label="教室">
                     <el-input v-model="form.coursePlace"></el-input>
@@ -104,8 +108,12 @@
                 <el-form-item label="教师名">
                     <el-input v-model="addForm.userName"></el-input>
                 </el-form-item>
-                <el-form-item label="开始时间">
-                    <el-input v-model="addForm.startTime"></el-input>
+                <el-form-item label="开课时间">
+                    <el-date-picker
+                            v-model="addForm.startTime"
+                            type="datetime"
+                            placeholder="选择日期时间">
+                    </el-date-picker>
                 </el-form-item>
                 <el-form-item label="课程学时">
                     <el-input v-model.number="addForm.courseHour"></el-input>
@@ -124,7 +132,9 @@
 
 <script>
     import { fetchData } from '../../api/index';
+    import moment from 'moment'  //用于时间格式化
     import axios from "axios";
+
     export default {
         name: 'course',
         data() {
@@ -176,7 +186,7 @@
                             pageSize: this.query.pageSize,
                             courseName: this.query.courseName
                         },
-                        { headers: { "Content-Type": "application/json" } }
+                        {headers: {"Content-Type": "application/json"}}
                     )
                     .then(
                         res => {
@@ -203,8 +213,8 @@
                 axios
                     .post(
                         "http://localhost:8080/daoyunWeb/course/getCourseCount",
-                        { courseName: this.query.courseName },
-                        { headers: { "Content-Type": "application/json" } }
+                        {courseName: this.query.courseName},
+                        {headers: {"Content-Type": "application/json"}}
                     )
                     .then(
                         res => {
@@ -226,12 +236,12 @@
                             courseId: this.form.courseId,
                             courseName: this.form.courseName,
                             teachId: this.form.teachId,
-                            userName:this.form.userName,
+                            userName: this.form.userName,
                             courseHour: this.form.courseHour,
-                            startTime:this.form.startTime,
+                            startTime: this.form.startTime,
                             coursePlace: this.form.coursePlace
                         },
-                        { headers: { "Content-Type": "application/json" } }
+                        {headers: {"Content-Type": "application/json"}}
                     )
                     .then(
                         res => {
@@ -241,7 +251,7 @@
                                     this.getData();
                                     this.getDataCount();
                                 } else if (res.data.code == -2) {
-                                    this.$router.push({ path: "/login" });
+                                    this.$router.push({path: "/login"});
                                     this.$message.error(res.data.msg);
                                 } else {
                                     this.$message.error(res.data.msg);
@@ -254,18 +264,18 @@
                     );
             },
             // 增加课程
-            addCourse(){
+            addCourse() {
                 axios
                     .post(
                         "http://localhost:8080/daoyunWeb/course/addCourseJson",
                         {
                             courseName: this.addForm.courseName,
-                            userName:this.addForm.userName,
+                            userName: this.addForm.userName,
                             courseHour: this.addForm.courseHour,
-                            startTime:this.addForm.startTime,
+                            startTime: this.addForm.startTime,
                             coursePlace: this.addForm.coursePlace
                         },
-                        { headers: { "Content-Type": "application/json" } }
+                        {headers: {"Content-Type": "application/json"}}
                     )
                     .then(
                         res => {
@@ -303,7 +313,8 @@
                         this.$message.success('删除成功');
                         this.tableData.splice(index, 1);
                     })
-                    .catch(() => {});
+                    .catch(() => {
+                    });
             },
             // 多选操作
             handleSelectionChange(val) {
@@ -357,6 +368,13 @@
             handlePageChange(val) {
                 this.$set(this.query, 'page', val);
                 this.getData();
+            },
+            dateFormat:function(row, column) {
+                var date = row[column.property];
+                if (date == undefined) {
+                    return "";
+                }
+                return moment(date).format("YYYY-MM-DD HH:mm:ss");
             }
         }
     };

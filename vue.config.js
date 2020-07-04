@@ -5,6 +5,6 @@ module.exports = {
       outputDir: 'dist',
       // webpack-dev-server 相关配置
     devServer: {
-      port: 9081 // 端口
+      port: 8081 // 端口
     },
 }

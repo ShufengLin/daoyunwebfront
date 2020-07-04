@@ -221,7 +221,7 @@ export default {
         code: "",
         parentId:0
       },
-      paperId: 0,
+      paperId: 1,
       paperName: "",
       paperNum: 0,
       paperDetail: "",
@@ -288,7 +288,7 @@ export default {
       // this.paperNum=this.$route.params.paperNum;
       // this.paperDetail=this.$route.params.paperDetail;
 
-      this.paperId = parseInt(localStorage.getItem("paperId"));
+      //this.paperId = parseInt(localStorage.getItem("paperId"));
       this.paperName = localStorage.getItem("paperName");
       this.paperNum = parseInt(localStorage.getItem("paperNum"));
       this.paperDetail = localStorage.getItem("paperDetail");

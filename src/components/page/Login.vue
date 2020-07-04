@@ -61,7 +61,7 @@ export default {
                   console.log(res);
                   if (res.data.code == 0) {
                     localStorage.setItem("token", res.data.dataPlus);
-                    this.$message.success(res.data.msg);
+                    //this.$message.success(res.data.msg);
                     localStorage.setItem("ms_userName", this.param.userName);
                     localStorage.setItem("ms_userId", res.data.data.userId);
                     this.$router.push("/");

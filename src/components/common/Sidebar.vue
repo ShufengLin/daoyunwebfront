@@ -48,7 +48,8 @@ export default {
   data() {
     return {
       collapse: false,
-      items: [
+      items: [],
+      originItems: [
         {
           icon: "el-icon-house",
           index: "manageboard",
@@ -123,6 +124,18 @@ export default {
         //         }
         //     ]
         // }
+      ],
+      teacherItems: [
+        {
+          icon: "el-icon-house",
+          index: "manageboard",
+          title: "系统首页"
+        },
+        {
+          icon: "el-icon-time",
+          index: "courseTeacher",
+          title: "课程管理"
+        }
       ]
     };
   },
@@ -153,8 +166,22 @@ export default {
             if (res.status == 200) {
               console.log(res);
               if (res.data.code == 0) {
-                localStorage.setItem("ms_roleId", res.data.data.roleId);
-                localStorage.setItem("ms_roleName", res.data.data.roleName);
+                if (res.data.data.roleName == "学生") {
+                  localStorage.removeItem("ms_userName");
+                  localStorage.removeItem("ms_userId");
+                  localStorage.removeItem("token");
+                  this.$router.push("/login");
+                  this.$message.error("请使用教师或管理员账号登录");
+                } else {
+                  if (res.data.data.roleName == "老师") {
+                    this.items = this.teacherItems;
+                  } else {
+                      this.items = this.originItems;
+                    localStorage.setItem("ms_roleId", res.data.data.roleId);
+                    localStorage.setItem("ms_roleName", res.data.data.roleName);
+                    this.$message.success("登录成功");
+                  }
+                }
               } else {
                 this.$message.error(res.data.msg);
               }
@@ -165,6 +192,20 @@ export default {
           }
         );
     }
+    // traverse1(array) {
+    //   array.forEach(function(item, index, arr) {
+    //     if (item.index != "manageboard" && item.index != "courseTeacher") {
+    //       arr.splice(index, 1);
+    //     }
+    //   });
+    // },
+    // traverse2(array) {
+    //   array.forEach(function(item, index, arr) {
+    //     if (item.index == "courseTeacher") {
+    //       arr.splice(index, 1);
+    //     }
+    //   });
+    // }
   }
 };
 </script>

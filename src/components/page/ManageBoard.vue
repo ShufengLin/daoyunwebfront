@@ -61,7 +61,7 @@ export default {
             if (res.status == 200) {
               if (res.data.code == 0) {
                 this.info = res.data.data;
-                this.$message.success(res.data.msg);
+                //this.$message.success(res.data.msg);
               } else if (res.data.code == -2) {
                 this.$router.push("/login");
                 this.$message.error(res.data.msg);

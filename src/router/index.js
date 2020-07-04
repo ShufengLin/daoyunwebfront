@@ -141,7 +141,14 @@ const routes = [{
                     title: '课程详情管理'
                 }
             },
-
+            {
+                path: '/courseTeacher',
+                component: () =>
+                    import ( /*webpackChunkName: "courseTeacher" */ '../components/page/CourseTeacher.vue'),
+                meta: {
+                    title: '课程管理'
+                }
+            },
             {
                 path: '/test',
                 component: () =>

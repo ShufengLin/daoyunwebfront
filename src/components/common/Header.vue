@@ -135,7 +135,7 @@ export default {
         if (valid) {
           axios
             .post(
-              "http://localhost:9999/daoyunWeb/Login/changePassword",
+              "http://121.196.49.85:9999/daoyunWeb/Login/changePassword",
               {
                 password: this.form.oldPassword,
                 newPassword: this.form.newPassword,

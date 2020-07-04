@@ -131,7 +131,7 @@
             getData() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/courseStudent/getCourseStudentByPage",
+                        "http://121.196.49.85:9999/daoyunWeb/courseStudent/getCourseStudentByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -164,7 +164,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/courseStudent/getCourseStudentCount",
+                        "http://121.196.49.85:9999/daoyunWeb/courseStudent/getCourseStudentCount",
                         { userName: this.query.studentName,
                                 courseId: this.courseId
                          },
@@ -186,7 +186,7 @@
             getParaData() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/getCourseById",
+                        "http://121.196.49.85:9999/daoyunWeb/course/getCourseById",
                         {
                             courseId: this.courseId
                         },
@@ -215,7 +215,7 @@
             updateCourse() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/updateCourseParaJson",
+                        "http://121.196.49.85:9999/daoyunWeb/course/updateCourseParaJson",
                         {
                             courseId: this.courseId,
                             defaultDistance: this.editForm.defaultDistance,

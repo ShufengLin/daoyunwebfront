@@ -199,7 +199,7 @@
             getData() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/getCourseByPage",
+                        "http://121.196.49.85:9999/daoyunWeb/course/getCourseByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -231,7 +231,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/getCourseCount",
+                        "http://121.196.49.85:9999/daoyunWeb/course/getCourseCount",
                         {courseName: this.query.courseName},
                         {headers: {"Content-Type": "application/json"}}
                     )
@@ -251,7 +251,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/teacher/getAllTeacher",
+                        "http://121.196.49.85:9999/daoyunWeb/teacher/getAllTeacher",
                         {
                         },
                         { headers: { "Content-Type": "application/json" } }
@@ -279,7 +279,7 @@
             updateCourse() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/updateCourseJson",
+                        "http://121.196.49.85:9999/daoyunWeb/course/updateCourseJson",
                         {
                             courseId: this.form.courseId,
                             courseName: this.form.courseName,
@@ -315,7 +315,7 @@
             addCourse() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/course/addCourseJson",
+                        "http://121.196.49.85:9999/daoyunWeb/course/addCourseJson",
                         {
                             courseName: this.addForm.courseName,
                             userName: this.addForm.userName,

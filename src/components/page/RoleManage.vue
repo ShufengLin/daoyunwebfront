@@ -179,7 +179,7 @@
             getData() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/getRoleByPage",
+                        "http://121.196.49.85:9999/daoyunWeb/role/getRoleByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -211,7 +211,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/getRoleCount",
+                        "http://121.196.49.85:9999/daoyunWeb/role/getRoleCount",
                         { roleName: this.query.roleName },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -231,7 +231,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/getAllPermission",
+                        "http://121.196.49.85:9999/daoyunWeb/role/getAllPermission",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -261,7 +261,7 @@
             updateRole() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/updateRole",
+                        "http://121.196.49.85:9999/daoyunWeb/role/updateRole",
                         {
                             roleName: this.addForm.roleName,
                             roleDescription: this.addForm.roleDescription,
@@ -294,7 +294,7 @@
             addRole(){
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/addRoleJson",
+                        "http://121.196.49.85:9999/daoyunWeb/role/addRoleJson",
                         {
                             roleName: this.addForm.roleName,
                             roleDescription: this.addForm.roleDescription,
@@ -328,7 +328,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/role/getOwnPermissionByRoleId",
+                        "http://121.196.49.85:9999/daoyunWeb/role/getOwnPermissionByRoleId",
                         {
                             roleId: this.form.roleId
                         },

@@ -254,7 +254,7 @@ export default {
     getData() {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/getPaperDetailByPage",
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/getPaperDetailByPage",
           {
             page: this.query.page,
             pageSize: this.query.pageSize,
@@ -297,7 +297,7 @@ export default {
       //TODO 待加入搜索限定参数
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/getPaperDetailCount/" +
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/getPaperDetailCount/" +
             this.paperId
         )
         .then(
@@ -315,7 +315,7 @@ export default {
     updatePaperDetail() {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/updatePaperDetailJson",
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/updatePaperDetailJson",
           {
             id: this.form.id,
             paperId: this.form.paperId,
@@ -354,7 +354,7 @@ export default {
       }
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/addPaperDetailJson",
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/addPaperDetailJson",
           {
             paperId: this.paperId,
             itemKey: this.addform.itemKey,
@@ -391,7 +391,7 @@ export default {
     deletePaperDetail() {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/deletePaperDetailJson/" +
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/deletePaperDetailJson/" +
             this.form.id
         )
         .then(
@@ -417,7 +417,7 @@ export default {
     getChildrenPaperDetail(id) {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/getChildrenPaperDetail/"+id,
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/getChildrenPaperDetail/"+id,
         )
         .then(
           res => {
@@ -443,7 +443,7 @@ export default {
       refreshChildrenPaperDetail(id) {//加载指定id节点的树形表格数据，达到重新刷新的目的
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/getChildrenPaperDetail/"+id,
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/getChildrenPaperDetail/"+id,
         )
         .then(
           res => {
@@ -470,7 +470,7 @@ export default {
       paperId = this.paperId;
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/testDetailExample/getAllPaperDetailRoot/"+paperId,
+          "http://121.196.49.85:9999/daoyunWeb/testDetailExample/getAllPaperDetailRoot/"+paperId,
         )
         .then(
           res => {

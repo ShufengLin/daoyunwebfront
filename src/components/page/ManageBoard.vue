@@ -49,7 +49,7 @@ export default {
     getData() {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/Login/getUserInfoById",
+          "http://121.196.49.85:9999/daoyunWeb/Login/getUserInfoById",
           {
             userId: this.userId
           },

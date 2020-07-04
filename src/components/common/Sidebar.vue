@@ -156,7 +156,7 @@ export default {
     getUserRole() {
       axios
         .post(
-          "http://localhost:9999/daoyunWeb/userRole/getUserRoleByUserId",
+          "http://121.196.49.85:9999/daoyunWeb/userRole/getUserRoleByUserId",
           { userId: parseInt(localStorage.getItem("ms_userId")) },
           { headers: { "Content-Type": "application/json" } }
         )

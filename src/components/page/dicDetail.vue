@@ -248,7 +248,7 @@
             getData() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/getDicdByPage",
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/getDicdByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -291,7 +291,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/getDicdCount/" +
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/getDicdCount/" +
                         this.dicId
                     )
                     .then(
@@ -314,7 +314,7 @@
                 }
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/updateDicdJson",
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/updateDicdJson",
                         {
                             id: this.form.id,
                             dicId: this.form.dicId,
@@ -358,7 +358,7 @@
                 }
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/addDicdJson",
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/addDicdJson",
                         {
                             dicId: this.dicId,
                             itemKey: this.addform.itemKey,
@@ -395,7 +395,7 @@
             deleteDicd() {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/deleteDicdJson/" +
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/deleteDicdJson/" +
                         this.form.id
                     )
                     .then(
@@ -422,7 +422,7 @@
             getChildrenDicDetail(id) {
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
                     )
                     .then(
                         res => {
@@ -447,7 +447,7 @@
             refreshChildrenDicDetail(id) {//加载指定id节点的树形表格数据，达到重新刷新的目的
                 axios
                     .post(
-                        "http://localhost:9999/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
+                        "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/getChildrenDicDetail/"+id,
                     )
                     .then(
                         res => {
@@ -474,7 +474,7 @@
             dicId = this.dicId;
             axios
                 .post(
-                    "http://localhost:9999/daoyunWeb/DictionaryDetail/getAllDicDetailRoot/"+dicId,
+                    "http://121.196.49.85:9999/daoyunWeb/DictionaryDetail/getAllDicDetailRoot/"+dicId,
                 )
                 .then(
                     res => {

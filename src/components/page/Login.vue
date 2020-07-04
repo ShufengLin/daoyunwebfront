@@ -4,7 +4,7 @@
       <div class="ms-title">到云后台管理系统</div>
       <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
         <el-form-item prop="userName">
-          <el-input v-model="param.userName" placeholder="输入用户名或手机号">
+          <el-input v-model="param.userName" placeholder="输入用户名">
             <el-button slot="prepend" icon="el-icon-user"></el-button>
           </el-input>
         </el-form-item>

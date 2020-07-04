@@ -50,7 +50,7 @@ export default {
         if (valid) {
           axios
             .post(
-              "http://localhost:8080/daoyunWeb/Login/checkLogin",
+              "http://localhost:9999/daoyunWeb/Login/checkLogin",
               this.param,
               { headers: { "Content-Type": "application/json" } }
             )

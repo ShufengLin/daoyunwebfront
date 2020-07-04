@@ -156,7 +156,7 @@ export default {
     getData() {
       //TODO 待加入搜索限定参数
       // axios
-      //   .get("http://localhost:8080/daoyunWeb/testExample/getAllPaper")
+      //   .get("http://localhost:9999/daoyunWeb/testExample/getAllPaper")
       //   .then(
       //     res => {
       //       console.log(res);
@@ -168,7 +168,7 @@ export default {
       //   );
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/getPaperByPage",
+          "http://localhost:9999/daoyunWeb/testExample/getPaperByPage",
           {
             page: this.query.page,
             pageSize: this.query.pageSize,
@@ -200,7 +200,7 @@ export default {
       //TODO 待加入搜索限定参数
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/getPaperCount",
+          "http://localhost:9999/daoyunWeb/testExample/getPaperCount",
           { paperName: this.query.paperName },
           { headers: { "Content-Type": "application/json" } }
         )
@@ -219,7 +219,7 @@ export default {
     updatePaper() {
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/updatePaperJson",
+          "http://localhost:9999/daoyunWeb/testExample/updatePaperJson",
           {
             paperId: this.form.paperId,
             paperName: this.form.paperName,
@@ -251,7 +251,7 @@ export default {
     addPaper() {
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/addPaperJson",
+          "http://localhost:9999/daoyunWeb/testExample/addPaperJson",
           {
             paperName: this.addform.paperName,
             paperNum: this.addform.paperNum,
@@ -283,7 +283,7 @@ export default {
       console.log(this.form);
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/deletePaperJson/" +
+          "http://localhost:9999/daoyunWeb/testExample/deletePaperJson/" +
             this.form.paperId
         )
         .then(
@@ -309,7 +309,7 @@ export default {
     deletePaperBatch() {
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/testExample/deletePaperBatchJson",
+          "http://localhost:9999/daoyunWeb/testExample/deletePaperBatchJson",
           this.delIdList,
           { headers: { "Content-Type": "application/json" } }
         )

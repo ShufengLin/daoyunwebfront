@@ -174,7 +174,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/teacher/getTeacherByPage",
+                        "http://localhost:9999/daoyunWeb/teacher/getTeacherByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -206,7 +206,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/teacher/getTeacherCount",
+                        "http://localhost:9999/daoyunWeb/teacher/getTeacherCount",
                         { userName: this.query.userName },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -225,7 +225,7 @@
             updateTeacher() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/teacher/updateTeacherJson",
+                        "http://localhost:9999/daoyunWeb/teacher/updateTeacherJson",
                         {
                             userId: this.form.userId,
                             userName: this.form.userName,
@@ -261,7 +261,7 @@
             addTeacher(){
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/teacher/addTeacherJson",
+                        "http://localhost:9999/daoyunWeb/teacher/addTeacherJson",
                         {
                             userId: this.addForm.userId,
                             userName: this.addForm.userName,

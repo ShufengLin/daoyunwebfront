@@ -154,7 +154,7 @@ export default {
       //TODO 待加入搜索限定参数
     axios
       .post(
-              "http://localhost:8080/daoyunWeb/Dictionary/getDicByPage",
+              "http://localhost:9999/daoyunWeb/Dictionary/getDicByPage",
               {
                 page: this.query.page,
                 pageSize: this.query.pageSize,
@@ -186,7 +186,7 @@ export default {
       //TODO 待加入搜索限定参数
       axios
         .post(
-                "http://localhost:8080/daoyunWeb/Dictionary/getDicCount",
+                "http://localhost:9999/daoyunWeb/Dictionary/getDicCount",
                 { dicName: this.query.dicName },
                 { headers: { "Content-Type": "application/json" } }
         )
@@ -205,7 +205,7 @@ export default {
     addDic() {
       axios
         .post(
-                "http://localhost:8080/daoyunWeb/Dictionary/addDicJson",
+                "http://localhost:9999/daoyunWeb/Dictionary/addDicJson",
                 {
                   dicName: this.addform.dicName,
                   code: this.addform.code,
@@ -236,7 +236,7 @@ export default {
     updateDic() {
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/Dictionary/updateDicJson",
+          "http://localhost:9999/daoyunWeb/Dictionary/updateDicJson",
           {
             dicId: this.form.dicId,
             dicName: this.form.dicName,
@@ -269,7 +269,7 @@ export default {
       console.log(this.form)
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/Dictionary/deleteDicJson/" +
+          "http://localhost:9999/daoyunWeb/Dictionary/deleteDicJson/" +
           this.form.dicId
         )
         .then(
@@ -295,7 +295,7 @@ export default {
     deleteDicBatch() {
       axios
         .post(
-          "http://localhost:8080/daoyunWeb/Dictionary/deleteDicBatchJson",
+          "http://localhost:9999/daoyunWeb/Dictionary/deleteDicBatchJson",
           this.delIdList,
           { headers: { "Content-Type": "application/json" } }
         )

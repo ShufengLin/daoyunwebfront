@@ -153,7 +153,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/userRole/getUserRoleByPage",
+                        "http://localhost:9999/daoyunWeb/userRole/getUserRoleByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -185,7 +185,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/userRole/getUserRoleCount",
+                        "http://localhost:9999/daoyunWeb/userRole/getUserRoleCount",
                         { userName: this.query.userName },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -205,7 +205,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/userRole/getAllRole",
+                        "http://localhost:9999/daoyunWeb/userRole/getAllRole",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -235,7 +235,7 @@
             updateUserRole() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/userRole/updateUserRoleJson",
+                        "http://localhost:9999/daoyunWeb/userRole/updateUserRoleJson",
                         {
                             id: this.form.id,
                             userId: this.form.userId,
@@ -270,7 +270,7 @@
             addUserRole(){
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/userRole/addUserRoleJson",
+                        "http://localhost:9999/daoyunWeb/userRole/addUserRoleJson",
                         {
                             userName: this.addForm.userName,
                             roleName: this.addForm.roleName

@@ -44,7 +44,7 @@ export default {
   methods:{
     getData(){
       
-      axios.get('http://localhost:8080/daoyunsystem/testExample/getAllPaper').then(res=>{
+      axios.get('http://localhost:9999/daoyunsystem/testExample/getAllPaper').then(res=>{
         console.log(res)
       },error=>{
         console.log(error)

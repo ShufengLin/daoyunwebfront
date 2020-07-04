@@ -7,7 +7,7 @@
                         <img src="../../assets/img/img.jpg" class="user-avator" alt />
                         <div class="user-info-cont">
                             <div class="user-info-name">{{info.userName}}</div>
-                            <div>{{info.roleName}}</div>
+                            <div>{{roleName}}</div>
                         </div>
                     </div>
                     <div class="user-info-list">
@@ -32,16 +32,18 @@ export default {
       userId: parseInt(localStorage.getItem("ms_userId")),
       info: {
         userName: "",
-        roleName:"",
         school: "",
         academy: "",
         major: "",
         phoneNumber: ""
-      }
+      },
+      roleName:""
     };
   },
   created() {
+    this.roleName = localStorage.getItem("ms_roleName"),
     this.getData();
+    console.log(this.roleName);
   },
   methods: {
     getData() {
@@ -83,55 +85,6 @@ export default {
   /* border:5px solid green; */
   width: 100%;
   height: 1000px;
-}
-.el-row {
-  /* margin-bottom: 10px; */
-  /* border:5px solid #000000; */
-  height: 50%;
-}
-.user-info {
-  display: flex;
-  align-items: center;
-  padding-bottom: 20px;
-  /* border-bottom: 2px solid red; */
-  margin-bottom: 30px;
-}
-
-.user-avator {
-  /* width: 120px; */
-  width: 200px;
-  /* height: 120px; */
-  height: 200px;
-  border-radius: 50%;
-  /* border: 5px solid blue; */
-}
-.mgb20 {
-  /* margin-bottom: 20px; */
-  height: 100%;
-  /* border:5px solid orange; */
-}
-.user-info-cont {
-  padding-left: 0px;
-  /* flex: 1; */
-  font-size: 14px;
-  color: #999;
-}
-.user-info-cont div:first-child {
-  font-size: 60px;
-  color: #222;
-}
-.user-info-name {
-  font-size: 50px;
-  color: #222;
-  margin-left: 20px;
-}
-.user-info-name:hover {
-  color: orange;
-}
-.user-info-role {
-  font-size: 20px;
-  color: #222;
-  margin-left: 20px;
 }
 
 .info {

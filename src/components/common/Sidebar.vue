@@ -67,27 +67,27 @@ export default {
                     title: '角色管理'
                 },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-document',
                     index: 'student',
                     title: '学生管理'
                 },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-d-caret',
                     index: 'teacher',
                     title: '教师管理'
                 },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-service',
                     index: 'userRole',
                     title: '用户管理'
                 },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-time',
                     index: 'course',
                     title: '课程管理'
                 },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-news',
                     index: 'dictionary',
                     title: '数据字典管理'
                 },
@@ -97,7 +97,7 @@ export default {
                 //     title: '测试页面'
                 // },
                 {
-                    icon: 'el-icon-tickets',
+                    icon: 'el-icon-menu',
                     index: 'testexpanddetail',
                     title: '菜单管理'
                 },

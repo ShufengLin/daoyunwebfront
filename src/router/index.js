@@ -173,7 +173,7 @@ const routes = [{
                 component: () =>
                     import ( /*webpackChunkName: "testexpanddetail" */ '../components/page/testExpandDetail.vue'),
                 meta: {
-                    title: '测试树形表格详情页面'
+                    title: '菜单管理'
                 }
             },
             {

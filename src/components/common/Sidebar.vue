@@ -90,17 +90,17 @@ export default {
                     icon: 'el-icon-tickets',
                     index: 'dictionary',
                     title: '数据字典管理'
-                }
+                },
                 // {
                 //     icon: 'el-icon-tickets',
                 //     index: 'test',
                 //     title: '测试页面'
                 // },
-                // {
-                //     icon: 'el-icon-tickets',
-                //     index: 'testexpand',
-                //     title: '测试树形表格页面'
-                // },
+                {
+                    icon: 'el-icon-tickets',
+                    index: 'testexpanddetail',
+                    title: '菜单管理'
+                },
                 // {
                 //     icon: 'el-icon-files',
                 //     index: '3',

@@ -77,7 +77,15 @@
                     <el-input v-model="form.courseName"></el-input>
                 </el-form-item>
                 <el-form-item label="教师名">
-                    <el-input v-model="form.userName"></el-input>
+                    <el-select v-model="form.userName" filterable placeholder="请选择">
+                        <el-option
+                                v-for="item in teacherDate"
+                                :key="item.userName"
+                                :label="item.userName"
+                                :value="item.userName">
+                        </el-option>
+                    </el-select>
+<!--                    <el-input v-model="form.userName"></el-input>-->
                 </el-form-item>
                 <el-form-item label="课程学时">
                     <el-input v-model.number="form.courseHour"></el-input>
@@ -86,6 +94,7 @@
                     <el-date-picker
                             v-model="form.startTime"
                             type="datetime"
+                            value-format="timestamp"
                             placeholder="选择日期时间">
                     </el-date-picker>
                  </el-form-item>
@@ -106,12 +115,20 @@
                     <el-input v-model="addForm.courseName"></el-input>
                 </el-form-item>
                 <el-form-item label="教师名">
-                    <el-input v-model="addForm.userName"></el-input>
+                    <el-select v-model="addForm.userName" filterable placeholder="请选择">
+                        <el-option
+                                v-for="item in teacherDate"
+                                :key="item.userName"
+                                :label="item.userName"
+                                :value="item.userName">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="开课时间">
                     <el-date-picker
                             v-model="addForm.startTime"
                             type="datetime"
+                            value-format="timestamp"
                             placeholder="选择日期时间">
                     </el-date-picker>
                 </el-form-item>
@@ -147,6 +164,7 @@
                 tableData: [],
                 selectTotal: 0,
                 multipleSelection: [],
+                teacherDate: [],
                 delList: [],
                 delIdList: [],
                 editVisible: false,
@@ -174,6 +192,7 @@
         created() {
             this.getData();
             this.getDataCount();
+            this.getTeacherData();
         },
         methods: {
             // 获取 easy-mock 的模拟数据
@@ -221,6 +240,35 @@
                             console.log(res);
                             if (res.status == 200) {
                                 this.selectTotal = res.data.data;
+                            }
+                        },
+                        error => {
+                            console.log(error);
+                        }
+                    );
+            },
+            getTeacherData() {
+                //TODO 待加入搜索限定参数
+                axios
+                    .post(
+                        "http://localhost:8080/daoyunWeb/teacher/getAllTeacher",
+                        {
+                        },
+                        { headers: { "Content-Type": "application/json" } }
+                    )
+                    .then(
+                        res => {
+                            console.log(res);
+                            if (res.status == 200) {
+                                if (res.data.code == 0) {
+                                    this.teacherDate = res.data.data;
+                                    this.$message.success(res.data.msg);
+                                } else if (res.data.code == -2) {
+                                    this.$router.push('/login');
+                                    this.$message.error(res.data.msg);
+                                } else {
+                                    this.$message.error(res.data.msg);
+                                }
                             }
                         },
                         error => {
@@ -302,6 +350,7 @@
                 this.$set(this.query, "pageIndex", 1);
                 this.getData();
                 this.getDataCount();
+                this.getTeacherData();
             },
             // 删除操作
             handleDelete(index, row) {

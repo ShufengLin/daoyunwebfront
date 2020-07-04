@@ -42,7 +42,6 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column prop="id" label="菜单编号" width="150" align="center"></el-table-column>
-        <el-table-column prop="itemKey" label="权限等级"></el-table-column>
         <el-table-column prop="itemValue" label="菜单名称"></el-table-column>
         <!--
         <el-table-column prop="isDefault" label="是否默认"></el-table-column>

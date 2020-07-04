@@ -29,7 +29,6 @@
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="courseId" label="ID" width="55" align="center" v-if="false"></el-table-column>
                 <el-table-column prop="courseName" label="课程名"></el-table-column>
-                <el-table-column prop="userName" label="教师名"></el-table-column>
                 <el-table-column prop="courseHour" label="课程学时"></el-table-column>
                 <el-table-column prop="startTime" :formatter="dateFormat" label="开课时间" > </el-table-column>
                 <el-table-column prop="coursePlace" label="教室"></el-table-column>
@@ -46,12 +45,6 @@
                                 icon="el-icon-edit"
                                 @click="handleEdit(scope.$index, scope.row)"
                         >编辑</el-button>
-                        <el-button
-                                type="text"
-                                icon="el-icon-delete"
-                                class="red"
-                                @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -76,17 +69,6 @@
                 <el-form-item label="课程名">
                     <el-input v-model="form.courseName"></el-input>
                 </el-form-item>
-                <el-form-item label="教师名">
-                    <el-select v-model="form.userName" filterable placeholder="请选择">
-                        <el-option
-                                v-for="item in teacherDate"
-                                :key="item.userName"
-                                :label="item.userName"
-                                :value="item.userName">
-                        </el-option>
-                    </el-select>
-<!--                    <el-input v-model="form.userName"></el-input>-->
-                </el-form-item>
                 <el-form-item label="课程学时">
                     <el-input v-model.number="form.courseHour"></el-input>
                 </el-form-item>
@@ -107,7 +89,6 @@
               <el-button type="primary" @click="saveEdit">确 定</el-button>
           </span>
         </el-dialog>
-
         <!-- 新增弹出框 -->
         <el-dialog title="新增" :visible.sync="addVisible" width="30%">
             <el-form ref="addForm" :model="addForm" label-width="70px">
@@ -115,14 +96,7 @@
                     <el-input v-model="addForm.courseName"></el-input>
                 </el-form-item>
                 <el-form-item label="教师名">
-                    <el-select v-model="addForm.userName" filterable placeholder="请选择">
-                        <el-option
-                                v-for="item in teacherDate"
-                                :key="item.userName"
-                                :label="item.userName"
-                                :value="item.userName">
-                        </el-option>
-                    </el-select>
+                    <el-input v-model="addForm.userName" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="开课时间">
                     <el-date-picker
@@ -159,7 +133,8 @@
                 query: {
                     page:1,
                     pageSize: 5,
-                    courseName: ""
+                    courseName: "",
+                    userId: 1,
                 },
                 tableData: [],
                 selectTotal: 0,
@@ -190,20 +165,22 @@
             };
         },
         created() {
+            this.query.userId = parseInt(localStorage.getItem("ms_userId"));
+            this.addForm.userName  = localStorage.getItem("ms_userName");
             this.getData();
             this.getDataCount();
-            this.getTeacherData();
         },
         methods: {
             // 获取 easy-mock 的模拟数据
             getData() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/getCourseByPage",
+                        "http://localhost:8080/daoyunWeb/course/getOwnCourseByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
-                            courseName: this.query.courseName
+                            courseName: this.query.courseName,
+                            userId: this.query.userId
                         },
                         {headers: {"Content-Type": "application/json"}}
                     )
@@ -231,8 +208,11 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/getCourseCount",
-                        {courseName: this.query.courseName},
+                        "http://localhost:8080/daoyunWeb/course/getOwnCourseCount",
+                        {
+                            courseName: this.query.courseName,
+                            userId:  this.query.userId
+                        },
                         {headers: {"Content-Type": "application/json"}}
                     )
                     .then(
@@ -240,35 +220,6 @@
                             console.log(res);
                             if (res.status == 200) {
                                 this.selectTotal = res.data.data;
-                            }
-                        },
-                        error => {
-                            console.log(error);
-                        }
-                    );
-            },
-            getTeacherData() {
-                //TODO 待加入搜索限定参数
-                axios
-                    .post(
-                        "http://localhost:8080/daoyunWeb/teacher/getAllTeacher",
-                        {
-                        },
-                        { headers: { "Content-Type": "application/json" } }
-                    )
-                    .then(
-                        res => {
-                            console.log(res);
-                            if (res.status == 200) {
-                                if (res.data.code == 0) {
-                                    this.teacherDate = res.data.data;
-                                    this.$message.success(res.data.msg);
-                                } else if (res.data.code == -2) {
-                                    this.$router.push('/login');
-                                    this.$message.error(res.data.msg);
-                                } else {
-                                    this.$message.error(res.data.msg);
-                                }
                             }
                         },
                         error => {
@@ -284,7 +235,7 @@
                             courseId: this.form.courseId,
                             courseName: this.form.courseName,
                             teachId: this.form.teachId,
-                            userName: this.form.userName,
+                            userName: this.addForm.userName,
                             courseHour: this.form.courseHour,
                             startTime: this.form.startTime,
                             coursePlace: this.form.coursePlace

@@ -1,132 +1,203 @@
 <template>
-    <div class="Change">
-        <el-row :gutter="20"  type="flex" justify="center">
-            <el-col>
-                <el-card shadow="hover" class="mgb20" style="height:500px;">
+  <div class="Change">
+    <el-row :gutter="20">
+      <el-col :span="20">
+                <el-card shadow="hover" class="mgb20" style="height:252px;">
                     <div class="user-info">
                         <img src="../../assets/img/img.jpg" class="user-avator" alt />
                         <div class="user-info-cont">
-                            <router-link to="/Introduction" class="user-info-name" title="用户详情">{{name}}</router-link>
-                            <!-- <div class="user-info-name" @click="changePaper">{{name}}</div> -->
-                            <div class="user-info-role">{{role}}</div>
-                        </div>
-                        <div class = "user-info-det">
-                            <h4>学校：福州大学</h4>
-                            <h4>学院：数学与计算机科学学院</h4>
-                            <h4>专业：计算机应用技术</h4>
-                            <h4>...</h4>
+                            <div class="user-info-name">{{info.userName}}</div>
+                            <div>{{roleName}}</div>
                         </div>
                     </div>
-                    <div class='info'>
-                        <div class="info-time">
-                            上次登录时间：
-                            <span>2020-3-21</span>
-                        </div>
-                        <div class="info-address">
-                            上次登录地点：
-                            <span>福建福州</span>
-                        </div>
+                    <div class="user-info-list">
+                        联系方式：
+                        <span>{{info.phoneNumber}}</span>
+                    </div>
+                    <div class="user-info-list">
+                        学校信息：
+                        <span>{{info.school+" "+info.academy+" "+info.major}}</span>
                     </div>
                 </el-card>
-            </el-col>
-        </el-row>
-    </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-export default{
-    data(){
-        return {
-            name:'陈同学',
-            role:'超级管理员'
-        }
+import axios from 'axios'
+export default {
+  data() {
+    return {
+      userId: parseInt(localStorage.getItem("ms_userId")),
+      info: {
+        userName: "",
+        school: "",
+        academy: "",
+        major: "",
+        phoneNumber: ""
+      },
+      roleName:""
+    };
+  },
+  created() {
+    this.roleName = localStorage.getItem("ms_roleName"),
+    this.getData();
+    console.log(this.roleName);
+  },
+  methods: {
+    getData() {
+      axios
+        .post(
+          "http://localhost:8080/daoyunWeb/Login/getUserInfoById",
+          {
+            userId: this.userId
+          },
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then(
+          res => {
+            console.log(res);
+            if (res.status == 200) {
+              if (res.data.code == 0) {
+                this.info = res.data.data;
+                //this.$message.success(res.data.msg);
+              } else if (res.data.code == -2) {
+                this.$router.push("/login");
+                this.$message.error(res.data.msg);
+              } else {
+                this.$message.error(res.data.msg);
+              }
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        );
     }
-}
+  }
+};
 </script>
 
 
 <style scoped>
-.Change{
-    /* border:5px solid green; */
-    width: 100%;
-    height: 1000px;
+.Change {
+  /* border:5px solid green; */
+  width: 100%;
+  height: 1000px;
+}
+
+.info {
+  /* border: 5px solid black; */
+  float: left;
+  width: 100%;
+}
+.info-time {
+  width: 20%;
+  float: left;
+}
+.info-address {
+  width: 90%;
+  /* border: 2px solid blue; */
+}
+.user-info-det {
+  width: 60%;
+  height: 200px;
+  margin-left: 30px;
+  margin-top: 10px;
+  /* border: 5px solid  #000000; */
+  font-size: 30px;
+}
+.user-info-det h4 {
+  margin-top: 20px;
+  margin-left: 150px;
 }
 .el-row {
-    /* margin-bottom: 10px; */
-    /* border:5px solid #000000; */
-    height: 50%;
+    margin-bottom: 20px;
+}
+.grid-content {
+    display: flex;
+    align-items: center;
+    height: 100px;
+}
+.grid-cont-right {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    color: #999;
+}
+.grid-num {
+    font-size: 30px;
+    font-weight: bold;
+}
+.grid-con-icon {
+    font-size: 50px;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    color: #fff;
+}
+.grid-con-1 .grid-con-icon {
+    background: rgb(45, 140, 240);
+}
+.grid-con-1 .grid-num {
+    color: rgb(45, 140, 240);
+}
+.grid-con-2 .grid-con-icon {
+    background: rgb(100, 213, 114);
+}
+.grid-con-2 .grid-num {
+    color: rgb(45, 140, 240);
+}
+.grid-con-3 .grid-con-icon {
+    background: rgb(242, 94, 67);
+}
+.grid-con-3 .grid-num {
+    color: rgb(242, 94, 67);
 }
 .user-info {
     display: flex;
     align-items: center;
     padding-bottom: 20px;
-    /* border-bottom: 2px solid red; */
-    margin-bottom: 30px;
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
 }
-
 .user-avator {
-    /* width: 120px; */
-    width: 200px;
-    /* height: 120px; */
-    height: 200px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    /* border: 5px solid blue; */
-}
-.mgb20 {
-    /* margin-bottom: 20px; */
-    height: 100%;
-    /* border:5px solid orange; */
 }
 .user-info-cont {
-    padding-left: 0px;
-    /* flex: 1; */
+    padding-left: 50px;
+    flex: 1;
     font-size: 14px;
     color: #999;
 }
 .user-info-cont div:first-child {
-    font-size: 60px;
+    font-size: 30px;
     color: #222;
 }
-.user-info-name{
-
-    font-size: 50px;
-    color:#222;
-    margin-left: 20px;
-    
+.user-info-list {
+    font-size: 14px;
+    color: #999;
+    line-height: 25px;
 }
-.user-info-name:hover{
-    color: orange;
+.user-info-list span {
+    margin-left: 70px;
 }
-.user-info-role{
-    font-size: 20px;
-    color:#222;
-    margin-left: 20px;
+.mgb20 {
+    margin-bottom: 20px;
 }
-
-.info{
-    /* border: 5px solid black; */
-    float: left;
+.todo-item {
+    font-size: 14px;
+}
+.todo-item-del {
+    text-decoration: line-through;
+    color: #999;
+}
+.schart {
     width: 100%;
+    height: 300px;
 }
-.info-time{
-    width: 20%;
-    float: left;
-}
-.info-address{
-    width: 90%;
-    /* border: 2px solid blue; */
-}
-.user-info-det{
-    width: 60%;
-    height: 200px;
-    margin-left: 30px;
-    margin-top: 10px;
-    /* border: 5px solid  #000000; */
-    font-size: 30px;
-}
-.user-info-det h4{
-    margin-top: 20px;
-    margin-left: 150px;
-}
-
 </style>

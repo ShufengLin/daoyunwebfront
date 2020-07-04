@@ -31,7 +31,7 @@
                 <el-table-column prop="courseName" label="课程名"></el-table-column>
                 <el-table-column prop="userName" label="教师名"></el-table-column>
                 <el-table-column prop="courseHour" label="课程学时"></el-table-column>
-                <el-table-column prop="startTime" formatter="dateFormat" label="开课时间" > </el-table-column>
+                <el-table-column prop="startTime" :formatter="dateFormat" label="开课时间" > </el-table-column>
                 <el-table-column prop="coursePlace" label="教室"></el-table-column>
 
                 <el-table-column label="操作" width="180" align="center">

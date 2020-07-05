@@ -175,7 +175,7 @@
             getData() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/getOwnCourseByPage",
+                        "http://121.196.49.85:9999/daoyunWeb/course/getOwnCourseByPage",
                         {
                             page: this.query.page,
                             pageSize: this.query.pageSize,
@@ -208,7 +208,7 @@
                 //TODO 待加入搜索限定参数
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/getOwnCourseCount",
+                        "http://121.196.49.85:9999/daoyunWeb/course/getOwnCourseCount",
                         {
                             courseName: this.query.courseName,
                             userId:  this.query.userId
@@ -230,7 +230,7 @@
             updateCourse() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/updateCourseJson",
+                        "http://121.196.49.85:9999/daoyunWeb/course/updateCourseJson",
                         {
                             courseId: this.form.courseId,
                             courseName: this.form.courseName,
@@ -266,7 +266,7 @@
             addCourse() {
                 axios
                     .post(
-                        "http://localhost:8080/daoyunWeb/course/addCourseJson",
+                        "http://121.196.49.85:9999/daoyunWeb/course/addCourseJson",
                         {
                             courseName: this.addForm.courseName,
                             userName: this.addForm.userName,

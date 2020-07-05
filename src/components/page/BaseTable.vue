@@ -174,7 +174,7 @@ export default {
             //TODO 待加入搜索限定参数
             axios
                 .post(
-                    "http://localhost:8080/daoyunWeb/student/getStudentByPage",
+                    "http://121.196.49.85:9999/daoyunWeb/student/getStudentByPage",
                     {
                         page: this.query.page,
                         pageSize: this.query.pageSize,
@@ -206,7 +206,7 @@ export default {
             //TODO 待加入搜索限定参数
             axios
                 .post(
-                    "http://localhost:8080/daoyunWeb/student/getStudentCount",
+                    "http://121.196.49.85:9999/daoyunWeb/student/getStudentCount",
                     { userName: this.query.userName },
                     { headers: { "Content-Type": "application/json" } }
                 )
@@ -225,7 +225,7 @@ export default {
         updateStudent() {
             axios
                 .post(
-                    "http://localhost:8080/daoyunWeb/student/updateStudentJson",
+                    "http://121.196.49.85:9999/daoyunWeb/student/updateStudentJson",
                     {
                         userId: this.form.userId,
                         userName: this.form.userName,
@@ -261,7 +261,7 @@ export default {
         addStudent(){
             axios
                 .post(
-                    "http://localhost:8080/daoyunWeb/student/addStudentJson",
+                    "http://121.196.49.85:9999/daoyunWeb/student/addStudentJson",
                     {
                         userId: this.addForm.userId,
                         userName: this.addForm.userName,

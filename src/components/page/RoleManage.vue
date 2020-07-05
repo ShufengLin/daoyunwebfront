@@ -43,12 +43,12 @@
                                 icon="el-icon-edit"
                                 @click="handleEdit(scope.$index, scope.row)"
                         >编辑</el-button>
-<!--                        <el-button-->
-<!--                                type="text"-->
-<!--                                icon="el-icon-delete"-->
-<!--                                class="red"-->
-<!--                                @click="handleDelete(scope.$index, scope.row)"-->
-<!--                        >删除</el-button>-->
+                        <!--                        <el-button-->
+                        <!--                                type="text"-->
+                        <!--                                icon="el-icon-delete"-->
+                        <!--                                class="red"-->
+                        <!--                                @click="handleDelete(scope.$index, scope.row)"-->
+                        <!--                        >删除</el-button>-->
                     </template>
                 </el-table-column>
             </el-table>
@@ -258,14 +258,15 @@
                         }
                     );
             },
+            //更新角色权限
             updateRole() {
                 axios
                     .post(
                         "http://121.196.49.85:9999/daoyunWeb/role/updateRole",
                         {
-                            roleName: this.addForm.roleName,
-                            roleDescription: this.addForm.roleDescription,
-                            permissionList: this.addForm.permissionList
+                            roleName: this.form.roleName,
+                            roleDescription: this.form.roleDescription,
+                            permissionList: this.ownPermissionList
                         },
                         { headers: { "Content-Type": "application/json" } }
                     )
@@ -415,7 +416,7 @@
             saveEdit() {
                 this.editVisible = false;
                 this.$message.success(`修改权限成功`);
-                // this.updateRole();
+                this.updateRole();
                 //this.$set(this.tableData, this.idx, this.form);
             },
             // 分页导航
